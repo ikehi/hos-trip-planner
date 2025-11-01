@@ -19,15 +19,15 @@ function FitBounds({ geojson }: { geojson: any }) {
       for (const f of features) {
         const g = f.geometry;
         if (!g) continue;
-        if (g.type === 'LineString') coords.push(...g.coordinates.map(([lng, lat]: number[]) => [lat, lng]));
-        if (g.type === 'MultiLineString') g.coordinates.forEach((line: number[][]) => coords.push(...line.map(([lng, lat]) => [lat, lng])));
+        if (g.type === 'LineString') coords.push(...g.coordinates.map(([lng, lat]: number[]) => [lat, lng] as [number, number]));
+        if (g.type === 'MultiLineString') g.coordinates.forEach((line: number[][]) => coords.push(...line.map(([lng, lat]: number[]) => [lat, lng] as [number, number])));
       }
       if (coords.length) {
         const south = Math.min(...coords.map(c => c[0]));
         const west = Math.min(...coords.map(c => c[1]));
         const north = Math.max(...coords.map(c => c[0]));
         const east = Math.max(...coords.map(c => c[1]));
-        map.fitBounds([[south, west], [north, east]], { padding: [30, 30] });
+        map.fitBounds([[south, west], [north, east]] as [[number, number], [number, number]], { padding: [30, 30] });
       }
     } catch {}
   }, [geojson, map]);

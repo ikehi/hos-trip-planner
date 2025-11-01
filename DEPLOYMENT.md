@@ -26,7 +26,7 @@ git push -u origin main
 5. **Settings**:
    - **Name**: `hos-planner-backend`
    - **Environment**: Python 3
-   - **Build Command**: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+   - **Build Command**: `pip install -r requirements.txt && cd backend && python manage.py collectstatic --noinput`
    - **Start Command**: `cd backend && gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT`
    - **Advanced**: Add **Persistent Disk**
      - Name: `media-disk`
