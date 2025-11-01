@@ -54,6 +54,12 @@ npm run dev
 Deployed on Vercel (frontend) + Render (backend)  
 *Live links added after deployment*
 
+## 🎥 Demo Video (Local)
+
+The app running locally end-to-end (map, markers, and generated log):
+
+<video src="demos/local-demo.mp4" controls width="720"></video>
+
 ## 📄 License
 
 MIT License
