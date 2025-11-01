@@ -19,19 +19,25 @@ A full-stack application for property-carrying drivers to plan trips while ensur
 ## 📦 Quick Start
 
 ### Backend
-\`\`\`bash
+```bash
 cd backend
 pip install -r ../requirements.txt
 python manage.py migrate
 python manage.py runserver
-\`\`\`
+```
+
+Before running the frontend, confirm the hosted backend is up:
+
+- Render backend: https://hos-trip-planner.onrender.com
+  - GET `/` returns 400 (expected) ⇒ service is live
+  - Optional: open `/api/plan/` and expect 405 on GET (POST-only endpoint)
 
 ### Frontend
-\`\`\`bash
+```bash
 cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 
 ## 🎯 How It Works
 
@@ -51,8 +57,10 @@ npm run dev
 
 ## 🌐 Live Demo
 
-Deployed on Vercel (frontend) + Render (backend)  
-*Live links added after deployment*
+Deployed on Vercel (frontend) + Render (backend)
+
+- Backend (Render): https://hos-trip-planner.onrender.com
+- Frontend (Vercel): https://frontend-gamma-weld.vercel.app
 
 ## 🎥 Demo Video (Local)
 
@@ -66,4 +74,4 @@ MIT License
 
 ---
 
-Built for FMCSA HOS compliance planning. Professional grade. 💰\$150
+Built for FMCSA HOS compliance planning. Professional grade. 💰$150
