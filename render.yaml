@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: hos-planner-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: cd backend && gunicorn backend.wsgi:application
+    envVars:
+      - key: ALLOWED_HOSTS
+        value: hos-planner-backend.onrender.com
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DISABLE_COLLECTSTATIC
+        value: "1"
+    disk:
+      name: media-disk
+      mountPath: /media
+      sizeGB: 1
