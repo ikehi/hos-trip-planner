@@ -59,5 +59,6 @@ Thumbs.db
 !backend/static/blank-paper-log.png
 PUSH_TO_GITHUB.bat
 VERCEL_DEPLOYMENT.txt
+FINAL_STEP.txt
 **/task.txt
 .vercel
