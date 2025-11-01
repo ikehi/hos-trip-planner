@@ -1,5 +1,9 @@
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import iconUrl from 'leaflet/dist/images/marker-icon.png';
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import { useEffect, useMemo } from 'react';
 
 type RouteData = {
@@ -8,6 +12,14 @@ type RouteData = {
 };
 
 type Props = { routeData?: RouteData };
+
+// Ensure Leaflet default marker icons resolve correctly on Vercel
+// (Vercel doesn't serve the images at root by default)
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+});
 
 function FitBounds({ geojson }: { geojson: any }) {
   const map = useMap();
