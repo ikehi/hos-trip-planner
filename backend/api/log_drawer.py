@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 from django.conf import settings
 import os
+from pathlib import Path
 
 GRID_START_X = 100
 GRID_END_X = 900
@@ -22,11 +23,22 @@ def get_y_for_status(status: str):
     return Y_LEVEL_OFF_DUTY
 
 def draw_log_sheet(events_for_day: list, day_number: int, total_miles: float):
-    blank_log_path = os.path.join(getattr(settings, 'STATIC_ROOT', ''), 'blank-paper-log.png')
-    if not os.path.isfile(blank_log_path):
+    # Resolve template image from multiple possible locations
+    static_root = Path(getattr(settings, 'STATIC_ROOT', ''))
+    candidates = [
+        static_root / 'blank-paper-log.png',
+        Path(getattr(settings, 'BASE_DIR', '.')) / 'backend' / 'static' / 'blank-paper-log.png',
+    ]
+    img = None
+    for p in candidates:
+        try:
+            if p and p.exists():
+                img = Image.open(str(p)).convert('RGBA')
+                break
+        except Exception:
+            pass
+    if img is None:
         img = Image.new('RGBA', (1000, 300), 'white')
-    else:
-        img = Image.open(blank_log_path).convert('RGBA')
     draw = ImageDraw.Draw(img)
 
     last_status = 'OffDuty'
@@ -46,10 +58,12 @@ def draw_log_sheet(events_for_day: list, day_number: int, total_miles: float):
         last_status = event['status']
 
     draw.text(TOTAL_MILES_XY, f"{total_miles:.0f}", fill='black')
-    media_root = getattr(settings, 'MEDIA_ROOT', os.getcwd())
+    media_root = Path(getattr(settings, 'MEDIA_ROOT', os.getcwd()))
     media_url = getattr(settings, 'MEDIA_URL', '/media/')
-    os.makedirs(media_root, exist_ok=True)
+    # Write into subfolder to avoid permission issues at mount root
+    logs_dir = media_root / 'logs'
+    logs_dir.mkdir(parents=True, exist_ok=True)
     output_filename = f'log_day_{day_number}.png'
-    output_path = os.path.join(media_root, output_filename)
-    img.save(output_path)
-    return os.path.join(media_url, output_filename)
+    output_path = logs_dir / output_filename
+    img.save(str(output_path))
+    return media_url.rstrip('/') + '/logs/' + output_filename
