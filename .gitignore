@@ -60,3 +60,4 @@ Thumbs.db
 PUSH_TO_GITHUB.bat
 VERCEL_DEPLOYMENT.txt
 **/task.txt
+.vercel
