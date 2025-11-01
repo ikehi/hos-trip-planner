@@ -2,9 +2,10 @@ import requests
 from typing import Tuple, Dict, Any
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-OSRM_ROUTE_URL = "http://router.project-osrm.org/route/v1/driving/"
+OSRM_ROUTE_URL = "https://router.project-osrm.org/route/v1/driving/"
 
-headers = {"User-Agent": "HOSPlanner/1.0"}
+# Include a descriptive User-Agent per Nominatim policy
+headers = {"User-Agent": "HOSPlanner/1.0 (+https://github.com/ikehi/hos-trip-planner)"}
 
 def get_coords_from_address(address: str) -> Tuple[float, float]:
     params = {"q": address, "format": "json", "limit": 1}
